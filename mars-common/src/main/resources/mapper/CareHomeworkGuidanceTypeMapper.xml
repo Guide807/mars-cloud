@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xian.woniu.mars.mapper.CareHomeworkGuidanceTypeMapper">
+
+    <resultMap id="BaseResultMap" type="xian.woniu.mars.entity.CareHomeworkGuidanceType">
+            <id property="homeworkGuidanceTypeId" column="homework_guidance_type_id" jdbcType="INTEGER"/>
+            <result property="homeworkGuidanceTypeMaxCount" column="homework_guidance_type_max_count" jdbcType="INTEGER"/>
+            <result property="homeworkGuidanceTypePerCountComm" column="homework_guidance_type_per_count_comm" jdbcType="INTEGER"/>
+            <result property="homeworkGuidanceTypePrice" column="homework_guidance_type_price" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        homework_guidance_type_id,homework_guidance_type_max_count,homework_guidance_type_per_count_comm,
+        homework_guidance_type_price
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from care_homework_guidance_type
+        where  homework_guidance_type_id = #{homeworkGuidanceTypeId,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from care_homework_guidance_type
+        where  homework_guidance_type_id = #{homeworkGuidanceTypeId,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="homework_guidance_type_id" keyProperty="homeworkGuidanceTypeId" parameterType="xian.woniu.mars.entity.CareHomeworkGuidanceType" useGeneratedKeys="true">
+        insert into care_homework_guidance_type
+        ( homework_guidance_type_id,homework_guidance_type_max_count,homework_guidance_type_per_count_comm
+        ,homework_guidance_type_price)
+        values (#{homeworkGuidanceTypeId,jdbcType=INTEGER},#{homeworkGuidanceTypeMaxCount,jdbcType=INTEGER},#{homeworkGuidanceTypePerCountComm,jdbcType=INTEGER}
+        ,#{homeworkGuidanceTypePrice,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" keyColumn="homework_guidance_type_id" keyProperty="homeworkGuidanceTypeId" parameterType="xian.woniu.mars.entity.CareHomeworkGuidanceType" useGeneratedKeys="true">
+        insert into care_homework_guidance_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="homeworkGuidanceTypeId != null">homework_guidance_type_id,</if>
+                <if test="homeworkGuidanceTypeMaxCount != null">homework_guidance_type_max_count,</if>
+                <if test="homeworkGuidanceTypePerCountComm != null">homework_guidance_type_per_count_comm,</if>
+                <if test="homeworkGuidanceTypePrice != null">homework_guidance_type_price,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="homeworkGuidanceTypeId != null">#{homeworkGuidanceTypeId,jdbcType=INTEGER},</if>
+                <if test="homeworkGuidanceTypeMaxCount != null">#{homeworkGuidanceTypeMaxCount,jdbcType=INTEGER},</if>
+                <if test="homeworkGuidanceTypePerCountComm != null">#{homeworkGuidanceTypePerCountComm,jdbcType=INTEGER},</if>
+                <if test="homeworkGuidanceTypePrice != null">#{homeworkGuidanceTypePrice,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="xian.woniu.mars.entity.CareHomeworkGuidanceType">
+        update care_homework_guidance_type
+        <set>
+                <if test="homeworkGuidanceTypeMaxCount != null">
+                    homework_guidance_type_max_count = #{homeworkGuidanceTypeMaxCount,jdbcType=INTEGER},
+                </if>
+                <if test="homeworkGuidanceTypePerCountComm != null">
+                    homework_guidance_type_per_count_comm = #{homeworkGuidanceTypePerCountComm,jdbcType=INTEGER},
+                </if>
+                <if test="homeworkGuidanceTypePrice != null">
+                    homework_guidance_type_price = #{homeworkGuidanceTypePrice,jdbcType=INTEGER},
+                </if>
+        </set>
+        where   homework_guidance_type_id = #{homeworkGuidanceTypeId,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="xian.woniu.mars.entity.CareHomeworkGuidanceType">
+        update care_homework_guidance_type
+        set 
+            homework_guidance_type_max_count =  #{homeworkGuidanceTypeMaxCount,jdbcType=INTEGER},
+            homework_guidance_type_per_count_comm =  #{homeworkGuidanceTypePerCountComm,jdbcType=INTEGER},
+            homework_guidance_type_price =  #{homeworkGuidanceTypePrice,jdbcType=INTEGER}
+        where   homework_guidance_type_id = #{homeworkGuidanceTypeId,jdbcType=INTEGER} 
+    </update>
+</mapper>

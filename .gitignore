@@ -1,0 +1,5 @@
+# Project exclude paths
+/mars-common/target/
+/mars-gateway/target/
+/mars-naire/target/
+/mars-teacher/target/

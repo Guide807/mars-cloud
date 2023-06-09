@@ -1,0 +1,40 @@
+server:
+  port: 8091
+spring:
+  application:
+    name: mars-naire
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/star_naire?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    cloud:
+      nacos:
+        discovery:
+          server-addr: localhost:8848
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
+  mapper-locations: classpath:mapper/*.xml
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+
+star-product:
+  ribbon:
+    NFLoadBalancerRuleClassName: xian.woniu.mars.config.MyLoadBalanceRule
+
+feign:
+  client:
+    config:
+      mars-naire:                 # 服务提供者的名字
+        loggerLevel: FULL           # NONE BASIC HEADERS FULL
+      default:
+        readTimeout: 1000
+logging:
+  level:
+    xian.woniu.mars.remote.*: debug

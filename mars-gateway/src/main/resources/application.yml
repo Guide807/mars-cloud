@@ -1,0 +1,25 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: star-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: teacher_route
+          uri: lb://mars-teacher       # 路由到的服务名
+          order: 1
+          predicates:
+            - Path=/mars-teacher/**     # 当请求路径匹配Path时，就会路由到uri
+          filters:
+            - StripPrefix=1             # 转发之前，去掉1层路径
+        - id: naire_route
+          uri: lb://mars-naire       # 路由到的服务名
+          order: 1
+          predicates:
+            - Path=/mars-naire/**     # 当请求路径匹配Path时，就会路由到uri
+          filters:
+            - StripPrefix=1             # 转发之前，去掉1层路径
+    nacos:
+      discovery:
+        server-addr: localhost:8848     # nacos服务地址

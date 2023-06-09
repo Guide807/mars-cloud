@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xian.woniu.mars.mapper.CareTeacherLevelMapper">
+
+    <resultMap id="BaseResultMap" type="xian.woniu.mars.entity.CareTeacherLevel">
+            <id property="teacherLevelId" column="teacher_level_id" jdbcType="INTEGER"/>
+            <result property="teacherLevelName" column="teacher_level_name" jdbcType="VARCHAR"/>
+            <result property="teacherLevelCommon" column="teacher_level_common" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        teacher_level_id,teacher_level_name,teacher_level_common
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from care_teacher_level
+        where  teacher_level_id = #{teacherLevelId,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from care_teacher_level
+        where  teacher_level_id = #{teacherLevelId,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="teacher_level_id" keyProperty="teacherLevelId" parameterType="xian.woniu.mars.entity.CareTeacherLevel" useGeneratedKeys="true">
+        insert into care_teacher_level
+        ( teacher_level_id,teacher_level_name,teacher_level_common
+        )
+        values (#{teacherLevelId,jdbcType=INTEGER},#{teacherLevelName,jdbcType=VARCHAR},#{teacherLevelCommon,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="teacher_level_id" keyProperty="teacherLevelId" parameterType="xian.woniu.mars.entity.CareTeacherLevel" useGeneratedKeys="true">
+        insert into care_teacher_level
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="teacherLevelId != null">teacher_level_id,</if>
+                <if test="teacherLevelName != null">teacher_level_name,</if>
+                <if test="teacherLevelCommon != null">teacher_level_common,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="teacherLevelId != null">#{teacherLevelId,jdbcType=INTEGER},</if>
+                <if test="teacherLevelName != null">#{teacherLevelName,jdbcType=VARCHAR},</if>
+                <if test="teacherLevelCommon != null">#{teacherLevelCommon,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="xian.woniu.mars.entity.CareTeacherLevel">
+        update care_teacher_level
+        <set>
+                <if test="teacherLevelName != null">
+                    teacher_level_name = #{teacherLevelName,jdbcType=VARCHAR},
+                </if>
+                <if test="teacherLevelCommon != null">
+                    teacher_level_common = #{teacherLevelCommon,jdbcType=INTEGER},
+                </if>
+        </set>
+        where   teacher_level_id = #{teacherLevelId,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="xian.woniu.mars.entity.CareTeacherLevel">
+        update care_teacher_level
+        set 
+            teacher_level_name =  #{teacherLevelName,jdbcType=VARCHAR},
+            teacher_level_common =  #{teacherLevelCommon,jdbcType=INTEGER}
+        where   teacher_level_id = #{teacherLevelId,jdbcType=INTEGER} 
+    </update>
+</mapper>

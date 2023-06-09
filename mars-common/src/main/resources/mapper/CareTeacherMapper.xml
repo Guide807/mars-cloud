@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xian.woniu.mars.mapper.CareTeacherMapper">
+
+    <resultMap id="BaseResultMap" type="xian.woniu.mars.entity.CareTeacher">
+            <id property="teacherId" column="teacher_id" jdbcType="INTEGER"/>
+            <result property="teacherName" column="teacher_name" jdbcType="VARCHAR"/>
+            <result property="teacherGender" column="teacher_gender" jdbcType="VARCHAR"/>
+            <result property="teacherNaireCount" column="teacher_naire_count" jdbcType="INTEGER"/>
+            <result property="teacherStudentCount" column="teacher_student_count" jdbcType="INTEGER"/>
+            <result property="teacherSal" column="teacher_sal" jdbcType="INTEGER"/>
+            <result property="homeworkGuidanceTypeId" column="homework_guidance_type_id" jdbcType="INTEGER"/>
+            <result property="teacherLevelId" column="teacher_level_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        teacher_id,teacher_name,teacher_gender,
+        teacher_naire_count,teacher_student_count,teacher_sal,
+        homework_guidance_type_id,teacher_level_id
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from care_teacher
+        where  teacher_id = #{teacherId,jdbcType=INTEGER} 
+    </select>
+
+    <update id="updateNaireCountById">
+        UPDATE care_teacher
+        SET teacher_naire_count = GREATEST(COALESCE(teacher_naire_count, 0), 0) + 1
+        WHERE teacher_id = #{teacherId};
+    </update>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from care_teacher
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from care_teacher
+        where  teacher_id = #{teacherId,jdbcType=INTEGER} 
+    </delete>
+
+    <!-- 删除多个-->
+    <delete id="deleteTeacherByIds">
+        delete from care_teacher where teacher_id in
+        <foreach collection="ids" item="tid" separator="," open="(" close=")">
+            #{tid}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyColumn="teacher_id" keyProperty="teacherId" parameterType="xian.woniu.mars.entity.CareTeacher" useGeneratedKeys="true">
+        insert into care_teacher
+        ( teacher_id,teacher_name,teacher_gender
+        ,teacher_naire_count,teacher_student_count,teacher_sal
+        ,homework_guidance_type_id,teacher_level_id)
+        values (#{teacherId,jdbcType=INTEGER},#{teacherName,jdbcType=VARCHAR},#{teacherGender,jdbcType=VARCHAR}
+        ,#{teacherNaireCount,jdbcType=INTEGER},#{teacherStudentCount,jdbcType=INTEGER},#{teacherSal,jdbcType=INTEGER}
+        ,#{homeworkGuidanceTypeId,jdbcType=INTEGER},#{teacherLevelId,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" keyColumn="teacher_id" keyProperty="teacherId" parameterType="xian.woniu.mars.entity.CareTeacher" useGeneratedKeys="true">
+        insert into care_teacher
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="teacherId != null">teacher_id,</if>
+                <if test="teacherName != null">teacher_name,</if>
+                <if test="teacherGender != null">teacher_gender,</if>
+                <if test="teacherNaireCount != null">teacher_naire_count,</if>
+                <if test="teacherStudentCount != null">teacher_student_count,</if>
+                <if test="teacherSal != null">teacher_sal,</if>
+                <if test="homeworkGuidanceTypeId != null">homework_guidance_type_id,</if>
+                <if test="teacherLevelId != null">teacher_level_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="teacherId != null">#{teacherId,jdbcType=INTEGER},</if>
+                <if test="teacherName != null">#{teacherName,jdbcType=VARCHAR},</if>
+                <if test="teacherGender != null">#{teacherGender,jdbcType=VARCHAR},</if>
+                <if test="teacherNaireCount != null">#{teacherNaireCount,jdbcType=INTEGER},</if>
+                <if test="teacherStudentCount != null">#{teacherStudentCount,jdbcType=INTEGER},</if>
+                <if test="teacherSal != null">#{teacherSal,jdbcType=INTEGER},</if>
+                <if test="homeworkGuidanceTypeId != null">#{homeworkGuidanceTypeId,jdbcType=INTEGER},</if>
+                <if test="teacherLevelId != null">#{teacherLevelId,jdbcType=INTEGER},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="xian.woniu.mars.entity.CareTeacher">
+        update care_teacher
+        <set>
+                <if test="teacherName != null">
+                    teacher_name = #{teacherName,jdbcType=VARCHAR},
+                </if>
+                <if test="teacherGender != null">
+                    teacher_gender = #{teacherGender,jdbcType=VARCHAR},
+                </if>
+                <if test="teacherNaireCount != null">
+                    teacher_naire_count = #{teacherNaireCount,jdbcType=INTEGER},
+                </if>
+                <if test="teacherStudentCount != null">
+                    teacher_student_count = #{teacherStudentCount,jdbcType=INTEGER},
+                </if>
+                <if test="teacherSal != null">
+                    teacher_sal = #{teacherSal,jdbcType=INTEGER},
+                </if>
+                <if test="homeworkGuidanceTypeId != null">
+                    homework_guidance_type_id = #{homeworkGuidanceTypeId,jdbcType=INTEGER},
+                </if>
+                <if test="teacherLevelId != null">
+                    teacher_level_id = #{teacherLevelId,jdbcType=INTEGER},
+                </if>
+        </set>
+        where   teacher_id = #{teacherId,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="xian.woniu.mars.entity.CareTeacher">
+        update care_teacher
+        set 
+            teacher_name =  #{teacherName,jdbcType=VARCHAR},
+            teacher_gender =  #{teacherGender,jdbcType=VARCHAR},
+            teacher_naire_count =  #{teacherNaireCount,jdbcType=INTEGER},
+            teacher_student_count =  #{teacherStudentCount,jdbcType=INTEGER},
+            teacher_sal =  #{teacherSal,jdbcType=INTEGER},
+            homework_guidance_type_id =  #{homeworkGuidanceTypeId,jdbcType=INTEGER},
+            teacher_level_id =  #{teacherLevelId,jdbcType=INTEGER}
+        where   teacher_id = #{teacherId,jdbcType=INTEGER} 
+    </update>
+</mapper>
