@@ -2,7 +2,7 @@ server:
   port: 8000
 spring:
   application:
-    name: star-gateway
+    name: mars-gateway
   cloud:
     gateway:
       routes:
@@ -11,14 +11,23 @@ spring:
           order: 1
           predicates:
             - Path=/mars-teacher/**     # 当请求路径匹配Path时，就会路由到uri
-          filters:
+#            - Age=18,60               # 年龄在18到60岁之间
+#            - Person=zhangsan        # 请求头中必须有Person=zhangsan
+          filters:                   # 过滤器
             - StripPrefix=1             # 转发之前，去掉1层路径
         - id: naire_route
           uri: lb://mars-naire       # 路由到的服务名
-          order: 1
+          order: 1                   # 路由顺序，越小越先执行
           predicates:
             - Path=/mars-naire/**     # 当请求路径匹配Path时，就会路由到uri
           filters:
+            - StripPrefix=1             # 转发之前，去掉1层路径
+        - id: auth_route
+          uri: lb://mars-auth       # 路由到的服务名
+          order: 1
+          predicates:
+            - Path=/mars-auth/**     # 当请求路径匹配Path时，就会路由到uri
+          filters: # 过滤器
             - StripPrefix=1             # 转发之前，去掉1层路径
     nacos:
       discovery:

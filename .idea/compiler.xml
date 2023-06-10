@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="mars-gateway" />
+        <module name="mars-auth" />
         <module name="mars-naire" />
         <module name="mars-teacher" />
         <module name="mars-common" />

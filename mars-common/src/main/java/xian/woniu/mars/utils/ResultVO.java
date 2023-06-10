@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
  */
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor //无参构造
 public class ResultVO {
     private Integer code;
     private String msg;
